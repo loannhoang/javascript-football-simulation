@@ -36,33 +36,33 @@ class FieldScene extends Phaser.Scene {
     // set bounds so the camera won't go outside the game world
     this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
 
-    //parse csv file to create offense
+    //create offensive group
+    this.offense = {};
     Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vTJwIgCS-T2qFvOjVAFo0TzBbUHxtWDxy60DWNED1gQeS8V43zI5toweqvyia2uuFK67xUlntvQMDjT/pub?gid=0&single=true&output=csv&headers=false', {
       download: true,
       header: true,
       dynamicTyping: true,
-      complete: function (offense) {
-        console.log(offense);
-        //create offensive group
-        offense.data.forEach(function (player, index, array) {
-          new Player(scene, 'red-dot', player.id, player.weight, player.power, player.speed, player.agility, player.x * scene.px_per_yd, player.y * scene.px_per_yd);
+      complete: function (result) {
+        result.data.forEach(function (player, index, array) {
+          scene.offense[player.id] = new Player(scene, 'red-dot', player.id, player.weight, player.power, player.speed, player.agility, player.x * scene.px_per_yd, player.y * scene.px_per_yd);
         });
       }
     });
+    console.log(this.offense);
 
-    //parse csv file to create defense
+    //create offensive group
+    this.defense = {};
     Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vTJwIgCS-T2qFvOjVAFo0TzBbUHxtWDxy60DWNED1gQeS8V43zI5toweqvyia2uuFK67xUlntvQMDjT/pub?gid=1074706941&single=true&output=csv&headers=false', {
       download: true,
       header: true,
       dynamicTyping: true,
-      complete: function (defense) {
-        console.log(defense);
-        //create defensive group
-        defense.data.forEach(function (player, index, array) {
-          new Player(scene, 'blue-dot', player.id, player.weight, player.power, player.speed, player.agility, player.x * scene.px_per_yd, player.y * scene.px_per_yd);
+      complete: function (result) {
+        result.data.forEach(function (player, index, array) {
+         scene.defense[player.id] = new Player(scene, 'blue-dot', player.id, player.weight, player.power, player.speed, player.agility, player.x * scene.px_per_yd, player.y * scene.px_per_yd);
         });
       }
     });
+    console.log(this.defense);
 
     //create a tooltip next to mouse cursor
    this.tooltip = scene.add.text(0, 0, '(0, 0)', { font: '12px Arial', fill: '#ffffff' })
