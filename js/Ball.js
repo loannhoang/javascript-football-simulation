@@ -1,5 +1,5 @@
 class Ball {
-    constructor(scene, x, y) {
+    constructor(scene, x, y, assignment) {
         this.scene = scene;
 
         //create ball sprite at given location
@@ -11,13 +11,28 @@ class Ball {
         //set a few physics options for the ball
         this.body.setCollideWorldBounds(true)
             .setMass(1/32.2);
+
+        this.assignment = assignment;
     }
 
-    moveTo(){
-
+    moveTo(x1, y1) {
+        x0 = this.body.x;
+        y0 = this.body.y;
+        if ((x0 != x1) || (y0 != y1)) {
+            this.body.setVelocity(
+                (x1 - x0) / 0.1,
+                (y1 - y0) / 0.1
+            );
+        } else {
+            this.body.stop()
+        }
     }
 
-    moveWith(){
+    moveWith(player){
         
+    }
+
+    update(){
+
     }
 }

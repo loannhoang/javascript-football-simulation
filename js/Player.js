@@ -1,5 +1,5 @@
 class Player {
-    constructor(scene, image, id, weight, power, speed, agility, x, y) {
+    constructor(scene, image, id, weight, power, speed, agility, x, y, assignment) {
         this.scene = scene;
 
         //create a dot to put player on, easier to see
@@ -27,6 +27,9 @@ class Player {
             .setCollideWorldBounds(true)
             .setMass(weight/32.2)
             .setMaxVelocity(12.3*this.scene.px_per_yd,12.3*this.scene.px_per_yd);
+
+        this.assignment = assignment;
+        this.current_assignment = 0;
     }
 
     sprint() {
@@ -42,5 +45,22 @@ class Player {
         } else {
             body.stop();
         }
+    }
+
+    snapTo(player){
+        var x = player.body.x;
+        var y = player.body.y;
+        this.scene.ball.moveTo(x,y);
+    }
+
+    throw(){
+
+    }
+
+    wait(){
+        this.body.stop();
+    }
+
+    update(){
     }
 }
